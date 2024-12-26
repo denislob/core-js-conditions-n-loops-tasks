@@ -298,8 +298,19 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  for (let i = 0; i < arr.length; i += 1) {
+    let firstPart = 0;
+    let secondPart = 0;
+    for (let j = 0; j < i; j += 1) {
+      firstPart += arr[j];
+    }
+    for (let k = i + 1; k < arr.length; k += 1) {
+      secondPart += arr[k];
+    }
+    if (firstPart === secondPart) return i;
+  }
+  return -1;
 }
 
 /**
@@ -323,8 +334,42 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = new Array(size);
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = new Array(size);
+    for (let j = 0; j < size; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+  let leftSide = 0;
+  let upSide = 0;
+  let rightSide = size - 1;
+  let downSide = size - 1;
+  let count = 1;
+  while (leftSide <= rightSide && upSide <= downSide) {
+    for (let j = leftSide; j <= rightSide; j += 1) {
+      matrix[upSide][j] = count;
+      count += 1;
+    }
+    upSide += 1;
+    for (let i = upSide; i <= downSide; i += 1) {
+      matrix[i][rightSide] = count;
+      count += 1;
+    }
+    rightSide -= 1;
+    for (let j = rightSide; j >= leftSide; j -= 1) {
+      matrix[downSide][j] = count;
+      count += 1;
+    }
+    downSide -= 1;
+    for (let i = downSide; i >= upSide; i -= 1) {
+      matrix[i][leftSide] = count;
+      count += 1;
+    }
+    leftSide += 1;
+  }
+  return matrix;
 }
 
 /**
